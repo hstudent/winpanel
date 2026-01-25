@@ -1,6 +1,6 @@
 export enum CommandStatus {
   none,
-  sending,
+  progress,
   completed,
   error,
 }

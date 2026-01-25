@@ -10,12 +10,11 @@ import {
 import { CommandStatus } from './command-status';
 import { map, Subject, switchMap, takeUntil, timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-command-status',
-  imports: [MatProgressSpinnerModule, MatIconModule],
+  imports: [MatIconModule],
   templateUrl: './command-status.component.html',
   styleUrl: './command-status.component.css',
 })
@@ -29,8 +28,6 @@ export class CommandStatusComponent {
   private cancelDelayed$ = new Subject<void>();
 
   private destroyRef = inject(DestroyRef);
-
-  readonly CommandStatus = CommandStatus;
 
   constructor() {
     // Завершаем cancelDelayed$ при уничтожении
@@ -76,7 +73,7 @@ export class CommandStatusComponent {
 
   statusClass = computed(() => {
     switch (this.displayStatus()) {
-      case CommandStatus.sending:
+      case CommandStatus.progress:
         return 'blue-color';
       case CommandStatus.completed:
         return 'green-color';
@@ -89,12 +86,27 @@ export class CommandStatusComponent {
 
   statusText = computed(() => {
     switch (this.displayStatus()) {
-      case CommandStatus.sending:
+      case CommandStatus.progress:
         return 'Отправка команды';
       case CommandStatus.completed:
         return 'Команда выполнена';
       case CommandStatus.error:
         return 'Ошибка выполнения';
+      default:
+        return null;
+    }
+  });
+
+  isSpinning = computed(() => this.displayStatus() === CommandStatus.progress);
+
+  readonly iconName = computed(() => {
+    switch (this.displayStatus()) {
+      case CommandStatus.progress:
+        return 'autorenew';
+      case CommandStatus.completed:
+        return 'check';
+      case CommandStatus.error:
+        return 'error';
       default:
         return null;
     }

@@ -16,7 +16,25 @@
     <div class="panel">
       <!-- Основная матрица -->
       @if (layout(); as layout) {
-        <div
+        <div class="monitors">
+          @for (monitor of monitors(); track monitor.Index) {
+            <div
+              class="matrix-cell has-monitor no-select"
+              (click)="toggleSelection(monitor)"
+              [class.selected-cell]="selectedMonitor() === monitor"
+            >
+              <!-- Буква P для основного монитора -->
+              @if (monitor.IsPrimary) {
+                <div class="primary-badge" title="Основной монитор">P</div>
+              }
+              <div class="cell-info">{{ monitor.Index + 1 }}</div>
+              <div class="display-resolution">
+                {{ monitor.Bounds.Width }} x {{ monitor.Bounds.Height }}
+              </div>
+            </div>
+          }
+        </div>
+        <!-- <div
           class="matrix-grid"
           [style.grid-template-columns]="'repeat(' + layout.columns + ', 11em)'"
           [style.grid-template-rows]="'repeat(' + layout.rows + ', 6em)'"
@@ -43,7 +61,7 @@
               </div>
             }
           }
-        </div>
+        </div> -->
       }
 
       <div class="action-button-container">

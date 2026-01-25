@@ -100,7 +100,7 @@ export class WinDisplayPanelComponent {
   constructor() {
     this.targetCommand
       .pipe(
-        tap(() => this.commandStatus.set(CommandStatus.sending)),
+        tap(() => this.commandStatus.set(CommandStatus.progress)),
         exhaustMap(({ id, state }) =>
           this.dataService.setMonitorPowerState(id, state).pipe(
             map(() => ({ success: true })),
@@ -129,7 +129,7 @@ export class WinDisplayPanelComponent {
   sendCommand(state: MonitorPowerState): void {
     const target = this.selectedMonitor();
     if (target) {
-      if (this.commandStatus() === CommandStatus.sending) {
+      if (this.commandStatus() === CommandStatus.progress) {
         this.showToast('Необходимо дождаться выполнения команды');
       } else {
         this.targetCommand.next({ id: target.Index, state });

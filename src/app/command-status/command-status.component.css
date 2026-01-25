@@ -1,5 +1,5 @@
 .command-status-block {
-  margin-left: 2em;
+  margin-left: 0.25em;
   display: flex;
   gap: 1em;
   align-items: center;
@@ -19,4 +19,17 @@
 
 .red-color {
   color: red;
+}
+
+.spinning {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
