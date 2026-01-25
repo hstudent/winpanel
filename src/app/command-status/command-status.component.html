@@ -1,0 +1,14 @@
+<div class="command-status-block {{ statusClass() }}">
+  @switch (displayStatus()) {
+    @case (CommandStatus.sending) {
+      <mat-spinner diameter="24" strokeWidth="3"></mat-spinner>
+    }
+    @case (CommandStatus.completed) {
+      <mat-icon>check</mat-icon>
+    }
+    @case (CommandStatus.error) {
+      <mat-icon>error</mat-icon>
+    }
+  }
+  <div>{{ statusText() }}</div>
+</div>

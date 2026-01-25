@@ -1,42 +1,72 @@
-<p>МОНИТОРЫ</p>
-<div>
-  <div class="example-flex-container">
-    <button matFab extended>
-      <mat-icon>favorite</mat-icon>
-      Basic
-    </button>
-    <button matFab extended disabled>
-      <mat-icon>favorite</mat-icon>
-      Disabled
-    </button>
-    <a matFab extended routerLink=".">
-      <mat-icon>favorite</mat-icon>
-      Link
-    </a>
+<div class="display-panel">
+  <div class="panel-caption">
+    <mat-icon class="scale-200">monitor</mat-icon>
+    <div>МОНИТОРЫ</div>
   </div>
-</div>
 
-<!-- Основная матрица -->
-<div
-  class="matrix-grid"
-  [style.grid-template-columns]="'repeat(' + layout.columns + ', 100px)'"
-  [style.grid-template-rows]="'repeat(' + layout.rows + ', 100px)'"
->
-  @for (row of layout.grid; track $index) {
-    @for (cell of row; track $index) {
-      <div
-        class="matrix-cell no-select"
-        [class.has-monitor]="cell"
-        [class.empty]="!cell"
-        (click)="selectMonitor(cell)"
-        [class.selected-cell]="selectedMonitor() == cell"
-      >
-        @if (cell) {
-          <div class="cell-info">
-            <small>{{ cell.id }}</small>
-          </div>
-        }
+  @if (serverItems.isLoading()) {
+    <div class="progress-panel">
+      <div>Подключение ...</div>
+    </div>
+  } @else if (serverItems.error()) {
+    <div class="error-panel">
+      <div>Ошибка подключения</div>
+    </div>
+  } @else {
+    <div class="panel">
+      <!-- Основная матрица -->
+      @if (layout(); as layout) {
+        <div
+          class="matrix-grid"
+          [style.grid-template-columns]="'repeat(' + layout.columns + ', 11em)'"
+          [style.grid-template-rows]="'repeat(' + layout.rows + ', 6em)'"
+        >
+          @for (row of layout.grid; track $index) {
+            @for (cell of row; track $index) {
+              <div
+                class="matrix-cell no-select"
+                [class.has-monitor]="cell"
+                [class.empty]="!cell"
+                (click)="toggleSelection(cell)"
+                [class.selected-cell]="selectedMonitor() === cell"
+              >
+                @if (cell) {
+                  <div class="cell-info">
+                    <small>{{ cell.Index + 1 }}</small>
+                  </div>
+                  <div class="display-resolution">
+                    <div>
+                      {{ cell.Bounds.Width }} x {{ cell.Bounds.Height }}
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          }
+        </div>
+      }
+
+      <div class="action-button-container">
+        <button
+          matFab
+          extended
+          class="control-button"
+          (click)="turnMonitorOn()"
+        >
+          <mat-icon class="scale-125 green-color">power_settings_new</mat-icon>
+          ВКЛЮЧИТЬ
+        </button>
+        <button
+          matFab
+          extended
+          class="control-button"
+          (click)="turnMonitorOff()"
+        >
+          <mat-icon class="scale-125 gray-color">do_not_disturb_on</mat-icon>
+          ВЫКЛЮЧИТЬ
+        </button>
       </div>
-    }
+      <app-command-status [status]="commandStatus()"></app-command-status>
+    </div>
   }
 </div>

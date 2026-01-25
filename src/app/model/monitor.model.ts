@@ -1,53 +1,29 @@
-// Базовые интерфейсы геометрии
-export interface Point {
-  x: number;
-  y: number;
-}
-
-export interface Size {
-  width: number;
-  height: number;
-}
+import { MonitorPowerState } from './monitor-power-state';
 
 export interface Rectangle {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-// Область рабочего стола (без панели задач)
-export interface WorkingArea {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  X: number;
+  Y: number;
+  Width: number;
+  Height: number;
 }
 
 // Основной интерфейс монитора
 export interface Monitor {
-  // Идентификаторы
-  id: number; // Уникальный идентификатор (0-based или 1-based)
-  deviceName: string; // Системное имя устройства (например, "\\.\DISPLAY1")
-  friendlyName: string; // Человеко-читаемое имя
+  Index: number; // Уникальный идентификатор (0-based или 1-based)
+
+  DeviceName: string; // Системное имя устройства (например, "\\.\DISPLAY1")
+
+  FriendlyName: string; // Человеко-читаемое имя
 
   // Статус и состояние
-  isPrimary: boolean; // Основной ли это монитор
-  isActive: boolean; // Активен ли монитор в данный момент
-  powerState: MonitorPowerState; // Состояние питания
+  IsPrimary: boolean; // Основной ли это монитор
 
   // Геометрия
-  bounds: Rectangle; // Полные границы монитора
-  workingArea: WorkingArea; // Рабочая область (без панели задач)
-}
+  Bounds: Rectangle; // Полные границы монитора
 
-// Состояние питания монитора
-export enum MonitorPowerState {
-  On = 'ON', // Включен
-  Standby = 'STANDBY', // Дежурный режим
-  Suspend = 'SUSPEND', // Приостановлен
-  Off = 'OFF', // Выключен
-  Unknown = 'UNKNOWN', // Неизвестно
+  WorkingArea: Rectangle; // Рабочая область (без панели задач)
+
+  PowerState: MonitorPowerState | null; // Состояние питания
 }
 
 // Информация о расположении относительно других мониторов

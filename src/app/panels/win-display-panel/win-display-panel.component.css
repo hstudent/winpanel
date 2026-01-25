@@ -1,16 +1,47 @@
+.display-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  padding-top: 1.5em;
+}
+
+.panel-caption {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1em;
+  font-size: larger;
+  font-weight: bold;
+  margin-left: 0.5em;
+}
+
+.scale-200 {
+  transform: scale(2);
+}
+
+.scale-125 {
+  transform: scale(1.25);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
 .matrix-grid {
   display: grid;
   gap: 20px;
-  margin: 20px 0;
 }
 
 .matrix-cell {
-  width: 100px;
-  height: 100px;
+  width: 9em;
+  height: 5em;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: 0.2em;
   font-weight: bold;
   font-size: 1.2em;
   cursor: pointer;
@@ -33,7 +64,7 @@
 
 /* Эффекты при наведении */
 .matrix-cell:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -62,8 +93,7 @@
 }
 
 .cell-info {
-  margin-bottom: 0.1em;
-  font-size: 3.5em;
+  font-size: 2.5em;
   font-weight: bold;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -91,7 +121,7 @@
 
 /* Можно добавить анимацию для плавного появления */
 .matrix-cell.selected-cell::after {
-  animation: pulseUnderline 0.3s ease-out;
+  animation: pulseUnderline 0.5s ease-out;
 }
 
 @keyframes pulseUnderline {
@@ -103,4 +133,39 @@
     opacity: 1;
     transform: scaleX(1);
   }
+}
+
+.action-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+}
+
+.control-button {
+  font-size: 0.75em;
+  font-weight: bold;
+}
+.green-color {
+  color: green;
+}
+
+.gray-color {
+  color: gray;
+}
+
+.display-resolution {
+  padding-bottom: 1.25em;
+  font-size: small;
+  color: #e9ecef;
+}
+
+.progress-panel {
+  font-size: 1.5em;
+  color: darkblue;
+}
+
+.error-panel {
+  font-size: 1.5em;
+  color: darkred;
 }

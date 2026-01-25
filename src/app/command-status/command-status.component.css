@@ -1,0 +1,22 @@
+.command-status-block {
+  margin-left: 2em;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.command-status-block > div {
+  font-size: 1.2em;
+}
+
+.blue-color {
+  color: darkblue;
+}
+
+.green-color {
+  color: darkgreen;
+}
+
+.red-color {
+  color: red;
+}

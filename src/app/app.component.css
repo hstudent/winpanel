@@ -1,0 +1,20 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  height: 100%;
+}
+
+.panel-caption {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: rgb(0, 140, 255);
+}
+
+.scale-200 {
+  transform: scale(1.5);
+}

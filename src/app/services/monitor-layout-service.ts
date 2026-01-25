@@ -1,14 +1,14 @@
 import { Monitor, MonitorArrangement } from '../model/monitor.model';
 
-export interface GridLayout {
+export interface GridLayout<T extends Monitor> {
   rows: number;
   columns: number;
   arrangement: MonitorArrangement;
-  grid: (Monitor | null)[][]; // 2D массив мониторов (null для пустых ячеек)
+  grid: (T | null)[][]; // 2D массив мониторов (null для пустых ячеек)
 }
 
 export class MonitorLayoutService {
-  static calculateMonitorGrid(monitors: Monitor[]): GridLayout {
+  static calculateMonitorGrid<T extends Monitor>(monitors: T[]): GridLayout<T> {
     if (monitors.length === 0) {
       return {
         rows: 0,
@@ -28,10 +28,10 @@ export class MonitorLayoutService {
     }
 
     // Получаем уникальные координаты по X и Y
-    const uniqueX = Array.from(new Set(monitors.map((m) => m.bounds.x))).sort(
+    const uniqueX = Array.from(new Set(monitors.map((m) => m.Bounds.X))).sort(
       (a, b) => a - b,
     );
-    const uniqueY = Array.from(new Set(monitors.map((m) => m.bounds.y))).sort(
+    const uniqueY = Array.from(new Set(monitors.map((m) => m.Bounds.Y))).sort(
       (a, b) => a - b,
     );
 
@@ -64,14 +64,14 @@ export class MonitorLayoutService {
     }
 
     // Строим 2D сетку мониторов
-    const grid: (Monitor | null)[][] = Array(rows)
+    const grid: (T | null)[][] = Array(rows)
       .fill(null)
       .map(() => Array(columns).fill(null));
 
     // Заполняем сетку
     monitors.forEach((monitor) => {
-      const colIndex = uniqueX.indexOf(monitor.bounds.x);
-      const rowIndex = uniqueY.indexOf(monitor.bounds.y);
+      const colIndex = uniqueX.indexOf(monitor.Bounds.X);
+      const rowIndex = uniqueY.indexOf(monitor.Bounds.Y);
 
       if (colIndex >= 0 && rowIndex >= 0) {
         grid[rowIndex][colIndex] = monitor;
@@ -130,9 +130,9 @@ export class MonitorLayoutService {
     // Проверяем одинаковость размеров мониторов в каждой колонке
     for (let col = 0; col < uniqueX.length; col++) {
       const monitorsInColumn = monitors.filter(
-        (m) => m.bounds.x === uniqueX[col],
+        (m) => m.Bounds.X === uniqueX[col],
       );
-      const widths = monitorsInColumn.map((m) => m.bounds.width);
+      const widths = monitorsInColumn.map((m) => m.Bounds.Width);
       const avgWidth = widths.reduce((a, b) => a + b) / widths.length;
 
       const isSameWidth = widths.every(
@@ -144,8 +144,8 @@ export class MonitorLayoutService {
 
     // Проверяем одинаковость размеров мониторов в каждом ряду
     for (let row = 0; row < uniqueY.length; row++) {
-      const monitorsInRow = monitors.filter((m) => m.bounds.y === uniqueY[row]);
-      const heights = monitorsInRow.map((m) => m.bounds.height);
+      const monitorsInRow = monitors.filter((m) => m.Bounds.Y === uniqueY[row]);
+      const heights = monitorsInRow.map((m) => m.Bounds.Height);
       const avgHeight = heights.reduce((a, b) => a + b) / heights.length;
 
       const isSameHeight = heights.every(
