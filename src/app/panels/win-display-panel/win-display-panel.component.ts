@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Monitor, MonitorArrangement } from '../../model/monitor.model';
 import { GridLayout } from '../../services/monitor-layout-service';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { catchError, exhaustMap, map, of, Subject, tap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommandStatusComponent } from '../../command-status/command-status.component';
 import { CommandStatus } from '../../command-status/command-status';
+import { ConfigurationService } from '../../services/configuration-service';
 
 @Component({
   selector: 'app-win-display-panel',
@@ -21,14 +22,13 @@ import { CommandStatus } from '../../command-status/command-status';
     MatIconModule,
     CommandStatusComponent,
   ],
-  providers: [MonitorDataService],
   templateUrl: './win-display-panel.component.html',
   styleUrl: './win-display-panel.component.css',
 })
 export class WinDisplayPanelComponent {
-  destroyRef = inject(DestroyRef);
-  dataService = inject(MonitorDataService);
-  private snackBar = inject(MatSnackBar);
+  private readonly dataService = inject(MonitorDataService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly configurationService = inject(ConfigurationService);
 
   DEBUG_MONITORS: Monitor[] = [
     {
@@ -127,17 +127,23 @@ export class WinDisplayPanelComponent {
   }
 
   sendCommand(state: MonitorPowerState): void {
-    const target = this.selectedMonitor();
-    if (target) {
-      if (this.commandStatus() === CommandStatus.progress) {
-        this.showToast('Необходимо дождаться выполнения команды');
-      } else {
-        this.targetCommand.next({ id: target.Index, state });
-      }
-    } else {
-      // монитор не выбран
-      this.showToast('Необходимо выбрать монитор');
+    if (!this.configurationService.targetServer()) {
+      this.showToast('Подключение не задано');
+      return;
     }
+
+    const target = this.selectedMonitor();
+    if (!target) {
+      this.showToast('Необходимо выбрать монитор');
+      return;
+    }
+
+    if (this.commandStatus() === CommandStatus.progress) {
+      this.showToast('Необходимо дождаться выполнения команды');
+      return;
+    }
+
+    this.targetCommand.next({ id: target.Index, state });
   }
   turnMonitorOff() {
     this.sendCommand(MonitorPowerState.SoftOff);

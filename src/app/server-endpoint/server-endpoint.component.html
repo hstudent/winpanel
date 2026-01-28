@@ -1,0 +1,102 @@
+<mat-card class="endpoint-editor" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Параметры подключения </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form #endpointForm="ngForm" class="endpoint-form">
+      <!-- Название -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Название</mat-label>
+        <input
+          matInput
+          name="name"
+          [(ngModel)]="endpoint.name"
+          required
+          [readonly]="isConnectionCheckInProgress()"
+          placeholder="Мой сервер"
+        />
+        @if (endpointForm.controls["name"]?.invalid) {
+          <mat-error> Название обязательно </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Протокол -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Протокол</mat-label>
+        <mat-select
+          name="protocol"
+          [(ngModel)]="endpoint.protocol"
+          required
+          [disabled]="isConnectionCheckInProgress()"
+        >
+          <mat-option value="http">HTTP</mat-option>
+          <mat-option value="https">HTTPS</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- IP адрес -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>IP адрес</mat-label>
+        <input
+          matInput
+          name="ip"
+          [(ngModel)]="endpoint.ip"
+          [readonly]="isConnectionCheckInProgress()"
+          required
+          pattern="^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+          placeholder="192.168.1.1"
+        />
+        @if (endpointForm.controls["ip"]?.invalid) {
+          <mat-error> Введите корректный IP адрес </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Порт</mat-label>
+        <input
+          matInput
+          name="port"
+          type="number"
+          [(ngModel)]="endpoint.port"
+          [readonly]="isConnectionCheckInProgress()"
+          required
+          min="1"
+          max="65535"
+          placeholder="8080"
+        />
+        @if (endpointForm.controls["port"]?.invalid) {
+          <mat-error>Порт должен быть от 1 до 65535</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Предпросмотр URL -->
+      <div class="url-preview">
+        <mat-icon>link</mat-icon>
+        <span [class.url-hidden]="!endpointForm.valid">{{ getFullUrl() }}</span>
+      </div>
+
+      <div>
+        <mat-progress-bar
+          [mode]="'indeterminate'"
+          [class.url-hidden]="!isConnectionCheckInProgress()"
+        ></mat-progress-bar>
+      </div>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button
+      mat-raised-button
+      (click)="onSave()"
+      color="primary"
+      [disabled]="!endpointForm.valid || isConnectionCheckInProgress()"
+    >
+      <mat-icon>save</mat-icon>
+      <span>Сохранить</span>
+    </button>
+    <button mat-button (click)="onCancel()" color="warn">
+      <mat-icon>close</mat-icon>
+      <span>Отмена</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

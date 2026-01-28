@@ -1,0 +1,49 @@
+.endpoint-editor {
+  min-width: 23em;
+  padding: 1em;
+}
+
+.endpoint-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.url-preview {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  border-radius: 4px;
+  font-family: monospace;
+  margin-top: -0.5em;
+  margin-left: 0.5em;
+}
+
+.url-preview mat-icon {
+  color: #666;
+  transform: scale(1.2);
+}
+
+.url-preview span {
+  font-size: large;
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+mat-card-actions {
+  margin-top: 0.5em;
+  gap: 1em;
+}
+
+.url-hidden {
+  visibility: hidden;
+}

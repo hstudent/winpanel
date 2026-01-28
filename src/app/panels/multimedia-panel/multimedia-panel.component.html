@@ -1,0 +1,39 @@
+<div class="display-panel">
+  <div class="panel-caption">
+    <mat-icon class="scale-200">music_note</mat-icon>
+    <div>MULTIMEDIA</div>
+  </div>
+
+  <div class="command-blocks">
+    <div class="commands">
+      <button matFab (click)="sendCommand(MediaAction.PlayPause)">
+        <mat-icon class="material-symbols-outlined scale-200"
+          >play_pause</mat-icon
+        >
+      </button>
+    </div>
+
+    <div class="commands">
+      <button matFab (click)="sendCommand(MediaAction.PreviousTrack)">
+        <mat-icon class="scale-150">skip_previous</mat-icon>
+      </button>
+      <button matFab (click)="sendCommand(MediaAction.NextTrack)">
+        <mat-icon class="scale-150">skip_next</mat-icon>
+      </button>
+    </div>
+
+    <div class="commands">
+      <button matFab (click)="sendCommand(MediaAction.VolumeDown)">
+        <mat-icon class="scale-150">volume_down</mat-icon>
+      </button>
+      <button matFab (click)="sendCommand(MediaAction.VolumeUp)">
+        <mat-icon class="scale-150">volume_up</mat-icon>
+      </button>
+    </div>
+    <div class="commands">
+      <button matFab (click)="sendCommand(MediaAction.Mute)">
+        <mat-icon class="scale-150">volume_off</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

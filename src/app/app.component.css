@@ -1,20 +1,49 @@
-.panel {
+.panels {
   display: flex;
   flex-direction: column;
   gap: 1em;
   height: 100%;
 }
 
-.panel-caption {
+.main-panel {
   display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: 1em;
-  font-size: 1.5em;
-  font-weight: bold;
-  color: rgb(0, 140, 255);
+  flex-direction: column;
+  align-items: start;
 }
 
 .scale-200 {
   transform: scale(1.5);
+}
+
+.main-cation {
+  font-size: 1.25em;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  color: rgb(0, 140, 255);
+}
+
+.server-details {
+  display: flex;
+  gap: 0.5em;
+  font-size: 1.25em;
+}
+
+.small-caption {
+  color: gray;
+}
+
+.server-name {
+  color: rgb(0, 140, 255);
+  letter-spacing: 0.1em;
+}
+
+.main-caption2 {
+  display: flex;
+  gap: 0.25em;
+  align-items: center;
+  margin-left: -0.5em;
+}
+
+.no-connection {
+  color: red;
 }

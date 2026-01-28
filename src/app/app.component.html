@@ -1,7 +1,34 @@
-<div class="panel">
-  <div class="panel-caption">
-    <div>ПАНЕЛЬ УПРАВЛЕНИЯ</div>
+<div class="panels">
+  <div class="main-panel">
+    <div class="main-caption2">
+      <button matIconButton [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="editConnection()">
+          <mat-icon>edit</mat-icon>
+          <span>Параметры подключения</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="removeConnection()">
+          <mat-icon>delete_forever</mat-icon>
+          <span>Очистить параметры подключения</span>
+        </button>
+      </mat-menu>
+      <div class="main-cation">ПАНЕЛЬ &nbsp;УПРАВЛЕНИЯ</div>
+    </div>
+    <div class="server-details">
+      @if (isServerSelected()) {
+        <div class="small-caption">компьютер:</div>
+        <div class="server-name">
+          {{ configurationService.targetServer()?.name }}
+        </div>
+      } @else {
+        <div class="no-connection">подключение не задано</div>
+      }
+    </div>
   </div>
+  <app-multimedia-panel></app-multimedia-panel>
   <app-win-display-panel></app-win-display-panel>
   <router-outlet />
 </div>
