@@ -1,31 +1,7 @@
-.display-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-  padding-top: 1.5em;
-}
-
-.panel-caption {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: 1em;
-  font-size: larger;
-  font-weight: bold;
-  margin-left: 0.5em;
-}
-
-.scale-200 {
-  transform: scale(2);
-}
-
-.scale-125 {
-  transform: scale(1.25);
-}
-
 .panel {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2em;
 }
 
@@ -66,24 +42,6 @@
 .matrix-cell:active {
   transform: scale(1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Запрет выделения текста во всей ячейке */
-.no-select {
-  cursor: pointer;
-  user-select: none; /* Запрещает выделение текста */
-  -webkit-user-select: none; /* Для Safari */
-  -moz-user-select: none; /* Для Firefox */
-  -ms-user-select: none; /* Для старых IE */
-  -webkit-touch-callout: none; /* Отключает вызов меню на iOS */
-}
-
-/* Запрет выделения в дочерних элементах */
-.no-select * {
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
 .cell-info {
@@ -129,23 +87,42 @@
   }
 }
 
-.action-button-container {
+.action-button-groups {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 3em;
+  row-gap: 2em;
+}
+
+.action-button-groups > div {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  flex-wrap: wrap;
   gap: 1em;
 }
 
 .control-button {
-  font-size: 0.75em;
+  font-size: 0.7em;
   font-weight: bold;
+  width: 100%;
 }
+
 .green-color {
   color: green;
 }
 
 .gray-color {
   color: gray;
+}
+
+.red-color {
+  color: red;
+}
+
+.orange-color {
+  color: darkcyan;
 }
 
 .display-resolution {
@@ -165,6 +142,7 @@
 }
 
 .monitors {
+  justify-content: center;
   display: flex;
   flex-direction: row;
   gap: 1em;

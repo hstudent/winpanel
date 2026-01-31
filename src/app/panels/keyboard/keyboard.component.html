@@ -1,0 +1,71 @@
+<div class="display-panel">
+  <div class="navigation-grid grid-rows-2 grid-cols-3">
+    <button matFab (click)="sendCommand('PlayPause', true)">
+      <mat-icon class="material-symbols-outlined scale-200"
+        >play_pause</mat-icon
+      >
+    </button>
+    <button matFab (click)="sendCommand('PreviousTrack', true)">
+      <mat-icon class="scale-150">skip_previous</mat-icon>
+    </button>
+    <button matFab (click)="sendCommand('NextTrack', true)">
+      <mat-icon class="scale-150">skip_next</mat-icon>
+    </button>
+    <button matFab (click)="sendCommand('VolumeDown', true)">
+      <mat-icon class="scale-150">volume_down</mat-icon>
+    </button>
+    <button matFab (click)="sendCommand('VolumeUp', true)">
+      <mat-icon class="scale-150">volume_up</mat-icon>
+    </button>
+    <button matFab (click)="sendCommand('VolumeMute', true)">
+      <mat-icon class="scale-150">volume_off</mat-icon>
+    </button>
+  </div>
+
+  <div class="navigation-grid grid-rows-3 grid-cols-3">
+    <div></div>
+    <button matFab (click)="sendCommand('UP_ARROW')">
+      <mat-icon class="scale-150">arrow_upward</mat-icon>
+    </button>
+    <div></div>
+
+    <button matFab (click)="sendCommand('LEFT_ARROW')">
+      <mat-icon class="scale-150">arrow_back</mat-icon>
+    </button>
+    <div></div>
+    <button matFab (click)="sendCommand('RIGHT_ARROW')">
+      <mat-icon class="scale-150">arrow_forward</mat-icon>
+    </button>
+
+    <div></div>
+    <button matFab (click)="sendCommand('DOWN_ARROW')">
+      <mat-icon class="scale-150">arrow_downward</mat-icon>
+    </button>
+  </div>
+
+  <div class="navigation-grid grid-rows-3 grid-cols-3 wide-buttons">
+    <button matFab (click)="sendCommand('ESCAPE')">
+      <span>Esc</span>
+    </button>
+    <button matFab (click)="sendCommand('HOME')">
+      <span>Home</span>
+    </button>
+    <button matFab (click)="sendCommand('PAGE_UP')">
+      <span>Page Up</span>
+    </button>
+
+    <!-- резервирование пустого места-->
+    <div></div>
+    <button matFab (click)="sendCommand('END')">
+      <span>End</span>
+    </button>
+    <button matFab (click)="sendCommand('PAGE_DOWN')">
+      <span>Page Down</span>
+    </button>
+
+    <!-- SPACE занимает ТРИ колонки -->
+    <button matFab (click)="sendCommand('SPACE')" class="space-button">
+      <span>SPACE</span>
+    </button>
+  </div>
+</div>

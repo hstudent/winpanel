@@ -9,10 +9,11 @@ import { MonitorPowerState } from '../../model/monitor-power-state';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { httpResource } from '@angular/common/http';
 import { catchError, exhaustMap, map, of, Subject, tap } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommandStatusComponent } from '../../command-status/command-status.component';
 import { CommandStatus } from '../../command-status/command-status';
 import { ConfigurationService } from '../../services/configuration-service';
+import { MOCK_MONITOR_RESULTS } from './mock-monitor-results';
+import { ToastService } from '../../services/toast-service';
 
 @Component({
   selector: 'app-win-display-panel',
@@ -27,52 +28,17 @@ import { ConfigurationService } from '../../services/configuration-service';
 })
 export class WinDisplayPanelComponent {
   private readonly dataService = inject(MonitorDataService);
-  private readonly snackBar = inject(MatSnackBar);
+  private readonly toastService = inject(ToastService);
   private readonly configurationService = inject(ConfigurationService);
 
-  DEBUG_MONITORS: Monitor[] = [
-    {
-      Index: 0,
-      DeviceName: '\\\\.\\DISPLAY1',
-      FriendlyName: 'Основной монитор',
-      IsPrimary: true,
-      PowerState: MonitorPowerState.On,
-      Bounds: {
-        X: 0,
-        Y: 0,
-        Width: 1920,
-        Height: 1080,
-      },
-      WorkingArea: {
-        X: 0,
-        Y: 0,
-        Width: 1920,
-        Height: 1040,
-      },
-    },
-    {
-      Index: 1,
-      DeviceName: '\\\\.\\DISPLAY2',
-      FriendlyName: 'Дополнительный монитор',
-      IsPrimary: false,
-      PowerState: MonitorPowerState.On,
-      Bounds: {
-        X: 1920, // Расположен справа от основного
-        Y: -150, // Слегка выше основного
-        Width: 1680,
-        Height: 1050,
-      },
-      WorkingArea: {
-        X: 1920,
-        Y: -150,
-        Width: 1680,
-        Height: 1010,
-      },
-    },
-  ];
-
   readonly serverItems = httpResource<Monitor[]>(
-    () => `http://192.168.88.249:8080/api/monitors`,
+    () =>
+      this.configurationService.isMock()
+        ? undefined
+        : `http://192.168.88.249:8080/api/monitors`,
+    {
+      defaultValue: MOCK_MONITOR_RESULTS,
+    },
   );
 
   readonly monitors = computed(() =>
@@ -118,7 +84,7 @@ export class WinDisplayPanelComponent {
       });
   }
 
-  toggleSelection(monitor: Monitor | null) {
+  toggleSelection(monitor: Monitor | null): void {
     if (!monitor || this.selectedMonitor() === monitor) {
       this.selectedMonitor.set(null);
     } else {
@@ -128,36 +94,45 @@ export class WinDisplayPanelComponent {
 
   sendCommand(state: MonitorPowerState): void {
     if (!this.configurationService.targetServer()) {
-      this.showToast('Подключение не задано');
+      this.toastService.show('Подключение не задано');
       return;
     }
 
     const target = this.selectedMonitor();
     if (!target) {
-      this.showToast('Необходимо выбрать монитор');
+      this.toastService.show('Необходимо выбрать монитор');
       return;
     }
 
     if (this.commandStatus() === CommandStatus.progress) {
-      this.showToast('Необходимо дождаться выполнения команды');
+      this.toastService.show('Необходимо дождаться выполнения команды');
       return;
     }
 
     this.targetCommand.next({ id: target.Index, state });
   }
-  turnMonitorOff() {
+
+  turnMonitorOff(): void {
     this.sendCommand(MonitorPowerState.SoftOff);
   }
 
-  turnMonitorOn() {
+  turnMonitorOn(): void {
     this.sendCommand(MonitorPowerState.On);
   }
 
-  showToast(message: string) {
-    this.snackBar.open(message, 'Закрыть', {
-      duration: 2000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-    });
+  deactivate(): void {
+    if (!this.configurationService.targetServer()) {
+      this.toastService.show('Подключение не задано');
+      return;
+    }
+    this.dataService.deactivate().subscribe(() => {});
+  }
+
+  activate(): void {
+    if (!this.configurationService.targetServer()) {
+      this.toastService.show('Подключение не задано');
+      return;
+    }
+    this.dataService.activate().subscribe(() => {});
   }
 }

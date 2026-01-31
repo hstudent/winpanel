@@ -1,9 +1,4 @@
 <div class="display-panel">
-  <div class="panel-caption">
-    <mat-icon class="scale-200">monitor</mat-icon>
-    <div>МОНИТОРЫ</div>
-  </div>
-
   @if (serverItems.isLoading()) {
     <div class="progress-panel">
       <div>Подключение ...</div>
@@ -34,55 +29,43 @@
             </div>
           }
         </div>
-        <!-- <div
-          class="matrix-grid"
-          [style.grid-template-columns]="'repeat(' + layout.columns + ', 11em)'"
-          [style.grid-template-rows]="'repeat(' + layout.rows + ', 6em)'"
-        >
-          @for (row of layout.grid; track $index) {
-            @for (cell of row; track $index) {
-              <div
-                class="matrix-cell no-select"
-                [class.has-monitor]="cell"
-                [class.empty]="!cell"
-                (click)="toggleSelection(cell)"
-                [class.selected-cell]="selectedMonitor() === cell"
-              >
-                @if (cell) {
-                  <div class="cell-info">
-                    <small>{{ cell.Index + 1 }}</small>
-                  </div>
-                  <div class="display-resolution">
-                    <div>
-                      {{ cell.Bounds.Width }} x {{ cell.Bounds.Height }}
-                    </div>
-                  </div>
-                }
-              </div>
-            }
-          }
-        </div> -->
       }
 
-      <div class="action-button-container">
-        <button
-          matFab
-          extended
-          class="control-button"
-          (click)="turnMonitorOn()"
-        >
-          <mat-icon class="scale-125 green-color">power_settings_new</mat-icon>
-          ВКЛЮЧИТЬ
-        </button>
-        <button
-          matFab
-          extended
-          class="control-button"
-          (click)="turnMonitorOff()"
-        >
-          <mat-icon class="scale-125 gray-color">do_not_disturb_on</mat-icon>
-          ВЫКЛЮЧИТЬ
-        </button>
+      <div class="action-button-groups">
+        <div>
+          <button
+            matFab
+            extended
+            class="control-button"
+            (click)="turnMonitorOn()"
+          >
+            <mat-icon class="scale-125 green-color"
+              >power_settings_new</mat-icon
+            >
+            ВКЛЮЧИТЬ
+          </button>
+          <button
+            matFab
+            extended
+            class="control-button"
+            (click)="turnMonitorOff()"
+          >
+            <mat-icon class="scale-125 gray-color">do_not_disturb_on</mat-icon>
+            ВЫКЛЮЧИТЬ
+          </button>
+        </div>
+        <div>
+          <button matFab extended class="control-button" (click)="activate()">
+            <mat-icon class="scale-125 green-color"
+              >power_settings_new</mat-icon
+            >
+            <span>ВКЛЮЧИТЬ • </span><span class="orange-color">SYSTEM</span>
+          </button>
+          <button matFab extended class="control-button" (click)="deactivate()">
+            <mat-icon class="scale-125 red-color">tv_off</mat-icon>
+            <span>ВЫКЛЮЧИТЬ • </span><span class="orange-color">SYSTEM</span>
+          </button>
+        </div>
       </div>
       <app-command-status [status]="commandStatus()"></app-command-status>
     </div>

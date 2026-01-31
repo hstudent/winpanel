@@ -1,0 +1,41 @@
+.display-panel {
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 2.5em;
+  row-gap: 1.75em;
+}
+
+.navigation-grid {
+  display: grid;
+  gap: 0.75em;
+}
+
+.grid-rows-3 {
+  grid-template-rows: repeat(3, min-content);
+}
+
+.grid-rows-2 {
+  grid-template-rows: repeat(2, min-content);
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, min-content);
+}
+
+.wide-buttons > button {
+  min-width: 6em;
+}
+
+.navigation-grid button span {
+  font-weight: bold;
+  font-size: 1.2em;
+  letter-spacing: 0.2em;
+  color: var(--secondary-color);
+}
+
+.space-button {
+  grid-column: 1 / span 3; /* ← ключевое свойство */
+  width: 100%; /* ширина как у двух кнопок */
+  justify-self: center; /* выравнивание по центру */
+}

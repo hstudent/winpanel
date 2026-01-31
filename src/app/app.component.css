@@ -1,3 +1,11 @@
+[appTabSwipe] {
+  cursor: grab;
+}
+
+[appTabSwipe]:active {
+  cursor: grabbing;
+}
+
 .panels {
   display: flex;
   flex-direction: column;
@@ -19,10 +27,11 @@
   font-size: 1.25em;
   font-weight: bold;
   letter-spacing: 0.1em;
-  color: rgb(0, 140, 255);
+  color: var(--primary-color);
 }
 
 .server-details {
+  padding-left: 0.2em;
   display: flex;
   gap: 0.5em;
   font-size: 1.25em;
@@ -33,8 +42,9 @@
 }
 
 .server-name {
-  color: rgb(0, 140, 255);
-  letter-spacing: 0.1em;
+  color: var(--secondary-color);
+  letter-spacing: 0.2em;
+  font-weight: bold;
 }
 
 .main-caption2 {
@@ -46,4 +56,34 @@
 
 .no-connection {
   color: red;
+}
+
+.tab-label {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.scale-150 {
+  transform: scale(1.5);
+}
+
+.tab-label-caption {
+  letter-spacing: 0.1em;
+  font-size: large;
+  font-weight: bold;
+  margin-left: 0.5em;
+}
+
+.selected-tab-icon {
+  color: rgb(0, 140, 255);
+}
+
+.green-color {
+  color: green;
+}
+
+.hidden {
+  visibility: hidden;
+  fill: aqua;
 }

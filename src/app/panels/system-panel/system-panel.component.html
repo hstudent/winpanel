@@ -1,0 +1,46 @@
+<div class="display-panel">
+  <div class="panel-blocks">
+    <div
+      class="power-commands"
+      [class.disabled-container]="isCommandScheduled()"
+    >
+      <div class="button-group">
+        <button matFab extended (click)="scheduleCommand('lock')">
+          <mat-icon class="scale-125">lock</mat-icon>
+          <div>LOCK</div>
+        </button>
+        <button matFab extended (click)="scheduleCommand('sleep')">
+          <mat-icon class="scale-125">bedtime</mat-icon>
+          <div>SLEEP</div>
+        </button>
+      </div>
+      <div class="button-group">
+        <button matFab extended (click)="scheduleCommand('restart')">
+          <mat-icon class="scale-125">settings_backup_restore</mat-icon>
+          <div>RESTART</div>
+        </button>
+        <button matFab extended (click)="scheduleCommand('shutdown')">
+          <mat-icon class="scale-125">power_settings_new</mat-icon>
+          <div>SHUT DOWN</div>
+        </button>
+      </div>
+      <div class="button-group">
+        <button matFab extended (click)="scheduleCommand('hibernate')">
+          <mat-icon class="scale-125">album</mat-icon>
+          <div>HIBERNATE</div>
+        </button>
+      </div>
+    </div>
+    @if (isCommandScheduled()) {
+      <div class="countdown-info">
+        <div class="remaining-time no-select">
+          Команда будет выполнена через {{ remainingTime() }} сек
+        </div>
+        <button matFab extended class="cancel-button" (click)="resetCommand()">
+          <mat-icon class="scale-125 red-color">cancel</mat-icon>
+          <div>ОТМЕНА</div>
+        </button>
+      </div>
+    }
+  </div>
+</div>

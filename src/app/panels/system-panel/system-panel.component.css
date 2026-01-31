@@ -1,0 +1,66 @@
+.display-panel {
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 2.5em;
+  row-gap: 1.75em;
+}
+
+.panel-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+.power-commands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+button {
+  font-size: 0.7em;
+  font-weight: bold;
+  letter-spacing: 1.1;
+}
+
+button div {
+  min-width: 6em;
+  text-align: left;
+}
+
+button mat-icon {
+  padding-left: 0.3em;
+  padding-right: 0.2em;
+}
+
+.countdown-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.remaining-time {
+  font-size: larger;
+  color: var(--secondary-color);
+}
+
+.red-color {
+  color: darkred;
+}
+
+.cancel-button {
+  font-size: 0.8em;
+  letter-spacing: 0.1em;
+  width: 12em;
+}
+
+.disabled-container {
+  color: gray;
+  pointer-events: none;
+  opacity: 0.5;
+}

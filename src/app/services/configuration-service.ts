@@ -6,7 +6,10 @@ import { isValidServerEndpoint } from '../server-endpoint/server-endpoint-valida
   providedIn: 'root',
 })
 export class ConfigurationService {
+  isMock = signal<boolean>(true);
+
   private readonly serverEndpointKey = 'serverendpoint';
+
   targetServer = signal<ServerEndpoint | null>({
     name: 'notebook',
     protocol: 'http',

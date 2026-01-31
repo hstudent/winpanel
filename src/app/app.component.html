@@ -14,6 +14,13 @@
           <mat-icon>delete_forever</mat-icon>
           <span>Очистить параметры подключения</span>
         </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="toggleMockMode()">
+          <mat-icon [class.hidden]="!configurationService.isMock()">
+            done_outline
+          </mat-icon>
+          <span>ДЕМО РЕЖИМ</span>
+        </button>
       </mat-menu>
       <div class="main-cation">ПАНЕЛЬ &nbsp;УПРАВЛЕНИЯ</div>
     </div>
@@ -28,7 +35,57 @@
       }
     </div>
   </div>
-  <app-multimedia-panel></app-multimedia-panel>
-  <app-win-display-panel></app-win-display-panel>
+
+  <mat-tab-group
+    #tabGroup
+    mat-stretch-tabs="true"
+    mat-align-tabs="center"
+    [(selectedIndex)]="selectedTabIndex"
+    (selectedIndexChange)="onSelectedIndexChanged($event)"
+  >
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="tab-label">
+          <mat-icon
+            class="scale-200"
+            [class.selected-tab-icon]="selectedTabIndex() === 0"
+            >keyboard</mat-icon
+          >
+        </div>
+      </ng-template>
+      <app-keyboard appTabSwipe (swipe)="onSwipe($event)"></app-keyboard>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="tab-label">
+          <mat-icon
+            class="scale-200"
+            [class.selected-tab-icon]="selectedTabIndex() === 1"
+            >monitor</mat-icon
+          >
+        </div>
+      </ng-template>
+      <app-win-display-panel
+        appTabSwipe
+        (swipe)="onSwipe($event)"
+      ></app-win-display-panel>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="tab-label">
+          <mat-icon
+            class="scale-200"
+            [class.selected-tab-icon]="selectedTabIndex() === 2"
+            >settings</mat-icon
+          >
+        </div>
+      </ng-template>
+      <app-system-panel
+        appTabSwipe
+        (swipe)="onSwipe($event)"
+      ></app-system-panel>
+    </mat-tab>
+  </mat-tab-group>
+
   <router-outlet />
 </div>

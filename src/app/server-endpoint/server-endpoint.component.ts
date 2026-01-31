@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, Inject, signal } from '@angular/core';
-import { filter, finalize, Observable, Subject, switchMap } from 'rxjs';
+import { filter, finalize, Observable } from 'rxjs';
 import { ServerEndpoint } from '../model/server-endpoint';
 import {
   MAT_DIALOG_DATA,
@@ -18,7 +18,7 @@ import { getServerEndpointUrl } from './server-endpoint-validation';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastService } from '../services/toast-service';
 
 @Component({
   selector: 'app-server-endpoint',
@@ -37,8 +37,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './server-endpoint.component.css',
 })
 export class ServerEndpointComponent {
-  private readonly snackBar = inject(MatSnackBar);
-
+  private readonly toastService = inject(ToastService);
   private destroyRef = inject(DestroyRef);
   private readonly httpClient = inject(HttpClient);
 
@@ -92,22 +91,14 @@ export class ServerEndpointComponent {
           if (status === 'connected') {
             this.dialogRef.close(this.endpoint);
           } else {
-            this.showToast('Неверный ответ от сервера');
+            this.toastService.show('Неверный ответ от сервера');
           }
         },
-        (err) => this.showToast('Ошибка подключения к серверу'),
+        (err) => this.toastService.show('Ошибка подключения к серверу'),
       );
   }
 
   onCancel(): void {
     this.dialogRef.close(null);
-  }
-
-  showToast(message: string) {
-    this.snackBar.open(message, 'Закрыть', {
-      duration: 2000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-    });
   }
 }

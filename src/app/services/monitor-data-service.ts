@@ -24,4 +24,14 @@ export class MonitorDataService {
       },
     );
   }
+
+  deactivate(): Observable<boolean> {
+    const url = `${this.configurationService.targetSeverConnection()}/api/monitors/deactivate`;
+    return this.httpClient.get<boolean>(url);
+  }
+
+  activate(): Observable<boolean> {
+    const url = `${this.configurationService.targetSeverConnection()}/api/monitors/activate`;
+    return this.httpClient.get<boolean>(url);
+  }
 }
