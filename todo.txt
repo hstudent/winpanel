@@ -1,3 +1,5 @@
+url - https://hstudent.github.io/winpanel/
+
 накопление команд
 timeout уменьшить до 5 секунд
 выключить комп
